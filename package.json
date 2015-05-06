@@ -14,13 +14,20 @@
   "dependencies": {
     "traceur": "0.0.45",
     "di": "~2.0.0-pre-2",
-    "prophecy":"^0.0.4"
+    "prophecy": "^0.0.4"
   },
   "devDependencies": {
-    "pipe": "angular/pipe",
     "assert": "angular/assert#dist",
+    "dts-generator": "^1.4.1",
+    "gulp": "^3.8.11",
     "gulp-connect": "~0.3.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-typescript": "^2.6.0",
+    "karma": "^0.12.31",
+    "merge2": "^0.3.5",
+    "pipe": "angular/pipe",
     "require": "~0.5.0",
+    "typescript": "v1.5.0-beta",
     "zone.js": "git://github.com/angular/zone.js#v0.2.4"
   },
   "scripts": {

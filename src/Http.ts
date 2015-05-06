@@ -1,3 +1,4 @@
+/// <reference path="../node_modules/typescript/bin/lib.dom.d.ts" />
 import {Deferred} from 'prophecy/Deferred';
 import {XHRConnection} from './XHRConnection';
 import {assert} from 'assert';
@@ -26,7 +27,35 @@ function http$$sendRequest(tuple) {
   return tuple.connection;
 }
 
+interface Handler {
+  resolve: (any);
+  reject: (any);
+}
+interface IRequest {
+  method: string;
+  url: string;
+  data: string;
+  responseType: string;
+  params: Map<string, any>;
+  headers: Map<string, string>;
+}
+interface IResponse {
+  method: string;
+  data: string;
+  responseType: string;
+  params: Map<string, any>;
+  headers: Map<string, string>;
+}
+interface IInterceptResolution {
+  req?: IRequest;
+  res?: IResponse;
+  err?: any;
+  interceptType: string;
+}
+
 class Http {
+  private globalInterceptors: { request: Array<Handler>; response: Array<Handler> };
+
   constructor () {
     Object.defineProperty(this, 'globalInterceptors', {
       configurable: false,
@@ -39,7 +68,17 @@ class Http {
     Object.freeze(this.globalInterceptors);
   }
 
-  request (config) {
+  /**
+   * @param config
+   * @param config.method - GET, POST, PUT etc
+   * @returns {Promise<T>}
+   */
+  request (config: {method: string; url: string;
+                  params: Map<string, any>;
+                  data: string;
+                  headers: Map<string, string>;
+                  responseType: string;
+                  ConnectionClass: any}) {
     var connection, http = this;
     return new Promise(function(resolve, reject) {
       var request, promise;

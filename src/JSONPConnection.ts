@@ -1,7 +1,12 @@
+/// <reference path="../node_modules/typescript/bin/lib.dom.d.ts" />
 import {Inject} from 'di/annotations';
 import {Injector} from 'di/injector';
 import {Deferred} from 'prophecy/Deferred';
 import {assert} from 'assert';
+
+interface Window {
+  __ngHttp__: any;
+}
 
 var jsonpCallback = 0;
 var nextCallback = () => {
@@ -27,10 +32,24 @@ var deleteCallback = (cbdata) => {
   }
 };
 
+//interface Callback {
+//  id: string;
+//  called: boolean;
+//  data: any;
+//}
+
 /**
  * Manages state of a single connection
  */
 export class JSONPConnection {
+  callback_: any; //Callback;
+            //{id: string; called: boolean; data: any};
+  script_: HTMLScriptElement;
+  deferred: Deferred;
+  promise: Promise<any>;
+  method: string;
+  url: string;
+
   constructor() {
     this.callback_ = nextCallback();
     this.script_ = document.createElement('script');

@@ -1,3 +1,5 @@
+/// <reference path="../node_modules/typescript/bin/lib.dom.d.ts" />
+
 export class Utils {
   static objectEquals(obj1, obj2) {
     var i, obj1Keys = Object.keys(obj1),
@@ -6,7 +8,7 @@ export class Utils {
     if (obj1Keys.length !== obj2Keys.length) return false;
 
     for (i = 0; i < obj1Keys.length; i++) {
-      key = obj1Keys[i];
+      var key = obj1Keys[i];
       if (obj1[key] === obj2[key]) {
         //Move along
       }

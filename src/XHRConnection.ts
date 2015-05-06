@@ -1,3 +1,4 @@
+/// <reference path="../node_modules/typescript/bin/lib.dom.d.ts" />
 import {Inject} from 'di/annotations';
 import {Injector} from 'di/injector';
 import {Deferred} from 'prophecy/Deferred';
@@ -13,10 +14,23 @@ var XHRDataTypes = assert.define('XHRDataTypes', (value) => {
   }
 });
 
+export interface Deferred {
+  (): Deferred;
+  promise: Promise<any>;
+  resolve: (any);
+  reject: (any);
+}
+
 /**
  * Manages state of a single connection
  */
 export class XHRConnection {
+  xhr_: XMLHttpRequest;
+  deferred: Deferred;
+  promise: Promise<any>;
+  method: string;
+  url: string;
+
   constructor() {
     this.xhr_ = new XMLHttpRequest();
     this.deferred = new Deferred();

@@ -1,10 +1,10 @@
-import {assert} from 'assert';
+/// <reference path="../node_modules/typescript/bin/lib.dom.d.ts" />
 
 /**
  * Serialize the parameters into a queryString, not including the leading "?" or
  * "&".
  */
-function toQueryString (params:Map) {
+function toQueryString (params:Map<string, any>) {
   var queryString = '',
       i = 0,
       orderedKeys, key, encodedKey, value;
@@ -20,6 +20,9 @@ function toQueryString (params:Map) {
 
   return queryString;
 }
+
+function encodeValue (value: Array<any>): string;
+function encodeValue (value: any, encodedKey: string): string;
 
 function encodeValue (value, encodedKey) {
   var iVal, i, queryString = '';
@@ -46,7 +49,7 @@ function encodeValue (value, encodedKey) {
     }
   }
 
-  return window.encodeURIComponent(value).
+  return encodeURIComponent(value).
           replace('%3A', ':').
           replace('%20', '+').
           replace('%24', '$').
